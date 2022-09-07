@@ -1,16 +1,10 @@
-package com.devsimple.Meta.model;
+package com.devsimple.Meta.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "tb_sales")
-public class Sale {
+public class SaleDTO {
 
-    @Id
     private String id;
     private String sellerName;
     private Integer visited;
@@ -18,10 +12,10 @@ public class Sale {
     private BigDecimal amount;
     private LocalDate date;
 
-    public Sale() {
+    public SaleDTO() {
     }
 
-    public Sale(String id, String sellerName, Integer visited, Integer deals, BigDecimal amount, LocalDate date) {
+    public SaleDTO(String id, String sellerName, Integer visited, Integer deals, BigDecimal amount, LocalDate date) {
         this.id = id;
         this.sellerName = sellerName;
         this.visited = visited;
