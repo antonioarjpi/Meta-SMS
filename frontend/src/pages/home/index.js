@@ -20,12 +20,14 @@ function Home() {
   const service = new SaleService();
 
   useEffect(() => {
-    service.findSales()
+    const dmin = minDate.toISOString().slice(0,10);
+    const dmax = maxDate.toISOString().slice(0,10);
+    service.findSales(dmin, dmax)
       .then(response => {
         setSales(response.data.content)
       })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[minDate, maxDate])
 
   return (
     <>

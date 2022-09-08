@@ -9,8 +9,8 @@ export default class SaleService extends ApiService{
         return this.post(`/`, sales)
     }
 
-    findSales(){
-        return this.get(`/`)
+    findSales(dmin, dmax){
+        return this.get(`?minDate=${dmin}&maxDate=${dmax}`)
     }
 
     sendSms(id){
