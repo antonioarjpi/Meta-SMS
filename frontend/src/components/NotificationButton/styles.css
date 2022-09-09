@@ -8,6 +8,17 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.dsmeta-red-btn:disabled {
+  background: rgba(236, 154, 154, 0.466);
+  border: 1px solid #fccbcd;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: auto;
 }
 
 .dsmeta-red-btn img {

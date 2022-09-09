@@ -7,11 +7,13 @@ import "./styles.css";
 import NotificationButton from './../../components/NotificationButton/index';
 import DatePicker, { registerLocale } from "react-datepicker";
 import SaleService from './../../service/resource/saleService';
+import { Skeleton } from 'primereact/skeleton';
 registerLocale("pt_br", pt_br);
 
 function Home() {
 
-  const [sales, setSales] = useState([])
+  const [sales, setSales] = useState([]);
+  const [loading, setLoading] = useState(true);
   const min = new Date(new Date().setDate(new Date().getDate() - 365));
   const max = new Date();
   const [minDate, setMinDate] = useState(min);
@@ -20,15 +22,37 @@ function Home() {
   const service = new SaleService();
 
   useEffect(() => {
-    const dmin = minDate.toISOString().slice(0,10);
-    const dmax = maxDate.toISOString().slice(0,10);
+    setLoading(false);
+    const dmin = minDate.toISOString().slice(0, 10);
+    const dmax = maxDate.toISOString().slice(0, 10);
     service.findSales(dmin, dmax)
       .then(response => {
         setSales(response.data.content)
+        setTimeout(() => {
+          setLoading(true);
+        }, 2000)
       })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[minDate, maxDate])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [minDate, maxDate])
 
+  const rows = (
+        <tr>
+          <td><Skeleton width="403px" borderRadius="16px"></Skeleton></td>
+          <td><Skeleton width="126px" borderRadius="16px"></Skeleton></td>
+          <td><Skeleton width="9rem" borderRadius="16px"></Skeleton></td>
+          <td><Skeleton width="5rem" borderRadius="16px"></Skeleton></td>
+          <td><Skeleton width="5rem" borderRadius="16px"></Skeleton></td>
+          <td><Skeleton width="5rem" borderRadius="16px"></Skeleton></td>
+          <td>
+            <div className="dsmeta-red-btn-container">
+              <div className="dsmeta-red-btn">
+                <NotificationButton disabled={true} />
+              </div>
+            </div>
+          </td>
+        </tr>
+      )
+    
   return (
     <>
       <Header />
@@ -57,40 +81,48 @@ function Home() {
                 </div>
               </div>
               <div>
-                <table className="dsmeta-sales-table">
-                  <thead>
-                    <tr>
-                      <th className="show992">ID</th>
-                      <th className="show576">Data</th>
-                      <th>Vendedor</th>
-                      <th className="show992">Visitas</th>
-                      <th className="show992">Vendas</th>
-                      <th>Total</th>
-                      <th>Notificar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sales.map(item => {
-                      return (
-                        <tr key={item.id}>
-                          <td className="show992">{item.id}</td>
-                          <td className="show576">{new Date(item.date).toLocaleDateString()}</td>
-                          <td>{item.sellerName}</td>
-                          <td className="show992">{item.visited}</td>
-                          <td className="show992">{item.deals}</td>
-                          <td>R$ {item.amount.toFixed(2)}</td>
-                          <td>
-                            <div className="dsmeta-red-btn-container">
-                              <div className="dsmeta-red-btn">
-                                <NotificationButton />
+                <div className="table-responsive">
+                  <table className="dsmeta-sales-table">
+                    <thead>
+                      <tr>
+                        <th className="show992">ID</th>
+                        <th className="show576">Data</th>
+                        <th>Vendedor</th>
+                        <th style={{textAlign:'center'}} className="show992">Visitas</th>
+                        <th style={{textAlign:'center'}} className="show992">Vendas</th>
+                        <th>Total</th>
+                        <th>Notificar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {loading ? sales.map(item => {
+                        return (
+                          <tr key={item.id}>
+                            <td className="show992">{item.id}</td>
+                            <td className="show576">{new Date(item.date).toLocaleDateString()}</td>
+                            <td>{item.sellerName}</td>
+                            <td style={{textAlign:'center'}} className="show992">{item.visited}</td>
+                            <td style={{textAlign:'center'}} className="show992">{item.deals}</td>
+                            <td>R$ {item.amount.toFixed(2)}</td>
+                            <td>
+                              <div className="dsmeta-red-btn-container">
+                                <div className="dsmeta-red-btn">
+                                  <NotificationButton saleId={item.id}/>
+                                </div>
                               </div>
-                            </div>
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
+                            </td>
+                          </tr>
+                        )
+                      }) : (
+                        <>
+                          {rows}
+                          {rows}
+                          {rows}
+                        </>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </Card>
           </div>
