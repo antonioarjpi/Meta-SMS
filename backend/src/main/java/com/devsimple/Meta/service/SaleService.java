@@ -2,6 +2,7 @@ package com.devsimple.Meta.service;
 
 import com.devsimple.Meta.config.ModelMapperConfig;
 import com.devsimple.Meta.dto.SaleDTO;
+import com.devsimple.Meta.exceptions.RuleOfBusinessException;
 import com.devsimple.Meta.model.Sale;
 import com.devsimple.Meta.repository.SaleRepository;
 import org.springframework.data.domain.Page;
@@ -38,6 +39,9 @@ public class SaleService {
 
     @Transactional
     public Sale saveSale(SaleDTO dto) {
+        if (dto.getDeals() > dto.getVisited()){
+            throw new RuleOfBusinessException("Erro! Visitas não pode ser maior que positivados.");
+        }
         Sale sale = modelMapper.toSaleCreate(dto);
         sale.setId(getUUid());
         return repository.save(sale);

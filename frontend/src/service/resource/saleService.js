@@ -10,7 +10,7 @@ export default class SaleService extends ApiService{
     }
 
     findSales(dmin, dmax){
-        return this.get(`?minDate=${dmin}&maxDate=${dmax}`)
+        return this.get(`?minDate=${dmin}&maxDate=${dmax}&sort=date,asc`)
     }
 
     sendSms(id){

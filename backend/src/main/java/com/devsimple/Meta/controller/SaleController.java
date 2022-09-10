@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/sales")
 public class SaleController {
@@ -35,7 +37,7 @@ public class SaleController {
     }
 
     @PostMapping
-    public ResponseEntity<Sale> saveSale(@RequestBody SaleDTO dto) {
+    public ResponseEntity<Sale> saveSale(@RequestBody @Valid SaleDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.saveSale(dto));
     }
 }

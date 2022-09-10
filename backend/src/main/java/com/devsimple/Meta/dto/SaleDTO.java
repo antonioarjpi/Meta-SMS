@@ -1,15 +1,27 @@
 package com.devsimple.Meta.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class SaleDTO {
 
     private String id;
+    @NotBlank(message = "Insira um nome válido!")
+    @Size(min = 3, max = 140, message = "Nome precisa ser entre 3 a 140 caracteres!")
     private String sellerName;
+    @NotNull(message = "É obrigatório informar a quantidade de visitas")
+    @Min(value = 1, message = "Visitados deve ser maior ou igual a 1")
     private Integer visited;
+    @NotNull(message = "É obrigatório informar a quantidade de clientes positivados")
+    @Min(value = 1, message = "Positivados deve ser maior ou igual a 1")
     private Integer deals;
+    @NotNull(message = "É obrigatório informar o valor")
     private BigDecimal amount;
+    @NotNull(message = "É obrigatório informar a data de venda")
     private LocalDate date;
 
     public SaleDTO() {
