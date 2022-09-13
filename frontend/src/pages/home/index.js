@@ -57,6 +57,10 @@ function Home() {
     setShowConfirmDialog(true)
   }
 
+  const cancelDialog = () => {
+    setShowConfirmDialog(false)
+  }
+
   const handleSubmit = () => {
     service.save(values)
     .then(response => {
@@ -71,17 +75,17 @@ function Home() {
   const footerMessage =
     <div className="footer-message">
       <Button label="Cadastrar" icon="pi pi-check" type="submit" onClick={handleSubmit} />
-      <Button label="Cancelar" icon="pi pi-times" type="button" className="p-button-secondary mt-2" />
+      <Button label="Cancelar" icon="pi pi-times" type="button" onClick={cancelDialog} className="p-button-secondary mt-2" />
     </div>;
 
   const rows = (
     <tr>
-      <td><Skeleton width="403px" borderRadius="16px"></Skeleton></td>
-      <td><Skeleton width="126px" borderRadius="16px"></Skeleton></td>
-      <td><Skeleton width="9rem" borderRadius="16px"></Skeleton></td>
-      <td><Skeleton width="5rem" borderRadius="16px"></Skeleton></td>
-      <td><Skeleton width="5rem" borderRadius="16px"></Skeleton></td>
-      <td><Skeleton width="5rem" borderRadius="16px"></Skeleton></td>
+      <td><Skeleton width="403px"></Skeleton></td>
+      <td><Skeleton width="126px"></Skeleton></td>
+      <td><Skeleton width="9rem"></Skeleton></td>
+      <td><Skeleton className="ml-2" width="3rem"></Skeleton></td>
+      <td><Skeleton className="ml-2" width="3rem"></Skeleton></td>
+      <td><Skeleton className="ml-1" width="5rem"></Skeleton></td>
       <td>
         <div className="dsmeta-red-btn-container">
           <div className="dsmeta-red-btn">
